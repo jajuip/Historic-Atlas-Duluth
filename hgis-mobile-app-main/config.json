@@ -1,0 +1,95 @@
+{
+  "map": {
+    "extent": [-92.1005,46.7845],
+    "basemap": "satellite",
+    "zoom": 13
+  },
+  "navbar": {
+    "title": "Historic Atlas of Duluth",
+    "backgroundColor": "#FFFFFF",
+    "logo": "assets/NW_H_ Atlas_Duluth_B&W.png",
+    "textColor": "#354D38"  
+  },
+  "layers": {
+    "storiesLayerUrl": "https://portal1-geo.sabu.mtu.edu/server/rest/services/Hosted/Historic_Atlas_of_Duluth_Stories_Layer/FeatureServer",
+    "indexLayerUrl": "https://portal1-geo.sabu.mtu.edu/server/rest/services/Hosted/Historic_Atlas_of_Duluth_Map_Index_Layer/FeatureServer"
+  },
+  "markers": {
+    "storyMarkerUrl": "assets/marker_story.png",
+    "storyMarkerWidth": "20px",
+    "storyMarkerHeight": "20px"
+  },
+  "splashScreen": {
+    "visible": true,
+    "title": "Historic Atlas of Duluth",
+    "titleColor": "#000000",
+    "backgroundColor": "#ffffff",
+    "textColor": "#000000",
+    "paragraphText": "The Historic Atlas of Duluth allows you to explore the past through historic cartography and images, while also giving you the chance to contribute your own stories and memories! This application is currently under development. To help this project grow we ask all users to complete a short survey. ",
+    "image": "assets/Historic Atlas of Duluth B&W.png",
+    "navBarColor": "#ffffff",
+    "navBarTextColor": "#000000",
+    "closeTextColor": "#000000"
+  }, 
+  "body": {
+    "textColor": "#354D38",
+    "backgroundColor": "#ffffff"
+  },
+  "footer": {
+    "backgroundColor": "#ffffff",
+    "iconColorInactive": "#354D38",
+    "iconColorActive": "#0054e9"
+  },
+  "mapCountIcon": {
+    "backgroundColor": "#ffffff",
+    "textColor": "#354D38"
+  },
+  "gpsButton": {
+    "backgroundColor": "#ffffff",       
+    "iconColorInactive": "#354D38",
+    "iconColorActive": "#0054e9"  
+  },   
+  "storyButtons": {
+    "backgroundColor": "#354D38",
+    "fontColor": "#EBDCBA"
+  },
+  "storySubmittedIcon": {
+    "color": "#0054e9"
+  },
+  "storyProgressBar": {
+    "colorInactive": "#0163aa",
+    "colorActive": "#1a73b3"
+  },
+  "storyPopup": {
+    "headerBackgroundColor": "#5f5f5f",
+    "headerTextColor": "#354D38"   
+  },
+  "mapTab": {
+    "backgroundColor": "#ffffff",
+    "textColor": "#354D38"
+  },
+  "storyTab": {
+    "backgroundColor": "#ffffff",
+    "textColor": "#000000"
+  },
+  "transparencySlider": {
+    "barColor": "#0066ff",    
+    "barColorActive": "#354D38",
+    "barColorInactive": "#83A1A0",
+    "handleColor": "#ffffff"
+  },
+  "links": [
+    {
+      "text": "About the project",
+      "url": "https://www.keweenawhistory.com/about-the-project.html"
+    },
+    {
+      "text": "About the maps",
+      "url": "https://www.keweenawhistory.com/about-the-maps.html"
+    },
+    {
+      "text": "Meet the team",
+      "url": "https://www.keweenawhistory.com/meet-the-team.html"
+    }
+  ]  
+}
