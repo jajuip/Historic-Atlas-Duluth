@@ -1043,7 +1043,7 @@ fetch('config.json')
             const title = graphic.attributes.phototitle;
             const mapYear = graphic.attributes.mapyear;      
             const filename = graphic.attributes.phototitle; 
-            const source = graphic.attributes.photosource;           
+            const source = graphic.attributes.credit;           
             // Populate modal content
             document.getElementById("modalTitle").textContent = title;
             document.getElementById("modalImage").src = "Photos/" + filename;
