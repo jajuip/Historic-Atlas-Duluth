@@ -1046,7 +1046,7 @@ fetch('config.json')
             const source = graphic.attributes.credit;           
             // Populate modal content
             document.getElementById("modalTitle").textContent = title;
-            document.getElementById("modalImage").src = "Photos/" + filename;
+            document.getElementById("modalImage").src = "photos/" + filename;
             document.getElementById("modalSource").textContent = source;
             document.getElementById("modalYear").textContent = mapYear;
             vsModal.isOpen = true;
