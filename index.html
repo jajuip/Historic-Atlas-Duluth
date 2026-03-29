@@ -34,7 +34,7 @@
                 </ion-buttons>
                 <ion-buttons slot="end">
                     <ion-text color="white">
-                        <ion-menu-button auto-hide="false" id="menuBtn"></ion-menu-button>
+                        <ion-menu-button auto-hide="false" id="menuBtn" color="dark"></ion-menu-button>
                     </ion-text>
                 </ion-buttons>
                 <ion-popover trigger="menuBtn" dismiss-on-select="true">
@@ -243,6 +243,22 @@
                 </ion-card>
             </ion-content>
         </ion-modal>
+        <ion-modal id="vsModal">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title id="modalTitle"></ion-title>
+      <ion-buttons slot="end">
+        <ion-button  id="vsModalClose">CLOSE</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="ion-padding">
+    <img id="modalImage" style="width: 100%;" />
+    <p><strong>Source:</strong> <span id="modalSource"></span></p>
+    <p><strong>Year:</strong> <span id="modalYear"></span></p>
+  </ion-content>
+</ion-modal>
     </ion-app>
     <script src="app.js"></script>
 </body>

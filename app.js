@@ -109,9 +109,10 @@ fetch('config.json')
                 "esri/widgets/Track", "esri/Graphic",
                 "esri/layers/GraphicsLayer",
                 "esri/geometry/support/webMercatorUtils",
-                "esri/geometry/Point"
+                "esri/geometry/Point",
+                "esri/core/reactiveUtils"
             ],
-            function(esriConfig, Map, MapView, FeatureLayer, TileLayer, WebTileLayer, Track, Graphic, GraphicsLayer, webMercatorUtils, Point) {
+            function(esriConfig, Map, MapView, FeatureLayer, TileLayer, WebTileLayer, Track, Graphic, GraphicsLayer, webMercatorUtils, Point, reactiveUtils) {
                 function validateFile(file) {
                     const video = document.createElement('video');
                     video.preload = 'metadata';
@@ -137,6 +138,8 @@ fetch('config.json')
                 const StoryModal = document.getElementById('storyModal');
 
                 const splashModal = document.getElementById('splashModal');
+
+                const vsModal = document.getElementById('vsModal');
 
                 const tabs = document.querySelector('ion-tabs');
 
@@ -406,7 +409,7 @@ fetch('config.json')
                     } else {
                         $('#storyauthor').html("by " + name);
                     }
-                    // Open the modal popup for storeis
+                    // Open the modal popup for stories
                     storyModal.isOpen = true;
                     // Query the attachments from the clicked story
                     storyLayer.queryAttachments({
@@ -753,6 +756,37 @@ fetch('config.json')
                     }
                 };
 
+                // styling for the story points layer
+                const fpRenderer = {
+                    "type": "simple",
+                    "symbol": {
+                        "type": "picture-marker",
+                        "url": "assets/markers/marker_picture_black.svg",
+                        "width": "25px",
+                        "height": "25px"
+                    }
+                };
+
+                // Layer for the focal points 
+                const fpLayer = new FeatureLayer({
+                    url: "https://portal1-geo.sabu.mtu.edu/server/rest/services/Hosted/Duluth_Viewshed_FP/FeatureServer/0",
+                    outFields: ["*"], // Return all fields so it can be queried client-side
+                    opacity: 1,
+                    renderer: fpRenderer,
+                    popupEnabled: true,
+                    id: "fp"
+                });
+
+                // Layer for the viewsheds
+                const vsLayer = new FeatureLayer({
+                    url: "https://portal1-geo.sabu.mtu.edu/server/rest/services/Hosted/Duluth_Viewshed/FeatureServer/0",
+                    outFields: ["*"], // Return all fields so it can be queried client-side
+                    opacity: 1,
+                    popupEnabled: true,
+                    id: "vs"
+                    //renderer: renderer
+                });
+
                 // Layer for the map index 
                 const indexLayer = new FeatureLayer({
                     url: config.layers.indexLayerUrl,
@@ -774,7 +808,7 @@ fetch('config.json')
 
                 const map = new Map({
                     basemap: config.map.basemap, // Basemap layer service
-                    layers: [indexLayer, storyLayer, graphicsLayer]
+                    layers: [indexLayer, storyLayer, graphicsLayer, vsLayer, fpLayer]
                 });
 
                 const view = new MapView({
@@ -786,6 +820,22 @@ fetch('config.json')
                         fillOpacity: 0
                     },
                 });
+
+                // Create a popup template for the fp layer
+                fpLayer.popupTemplate = {
+                    title:'photopoint',
+                    content: "Description"    
+                };
+
+                // Create a popup template for the vs layer
+                vsLayer.popupTemplate = {
+                    title:'photopoint',
+                    content: "Description"    
+                };
+
+                // start out with an expression that has no matches
+                vsLayer.definitionExpression = "phototitle = 0000000000000000000000000000";
+                fpLayer.definitionExpression = "phototitle = " + "' 0 '" ;
 
                 // Removes the zoom widget from the view
                 view.ui.remove("zoom");
@@ -973,6 +1023,38 @@ fetch('config.json')
                     });
                 });
 
+                // watch for a click on the photosLayer  
+ reactiveUtils.watch(
+  () => view.popup.selectedFeature,
+  (graphic) => {
+    if (graphic) {
+        if (graphic.layer.id === "fp") {
+      console.log(graphic);
+      const pId = graphic.attributes.phototitle;
+      const title = graphic.attributes.phototitle;
+      const mapYear = graphic.attributes.mapyear;      
+      const filename = graphic.attributes.phototitle;
+      
+
+      // set definition expression to match the viewshed associated with the clicked point id.
+      vsLayer.definitionExpression = "phototitle = " + "'" + pId + "'";
+        } else if (graphic.layer.id === "vs") {
+            const pId = graphic.attributes.phototitle;
+            const title = graphic.attributes.phototitle;
+            const mapYear = graphic.attributes.mapyear;      
+            const filename = graphic.attributes.phototitle; 
+            const source = graphic.attributes.photosource;           
+            // Populate modal content
+            document.getElementById("modalTitle").textContent = title;
+            document.getElementById("modalImage").src = "Photos/" + filename;
+            document.getElementById("modalSource").textContent = source;
+            document.getElementById("modalYear").textContent = mapYear;
+            vsModal.isOpen = true;
+
+        }
+    }
+});
+
                 const listNode = document.getElementById("mapcontent");
 
                 let graphics;
@@ -1023,7 +1105,7 @@ fetch('config.json')
 
                                     function resultClickHandler(result, index) {
                                         currentMapUrl = 'present';
-
+                                        fpLayer.definitionExpression = "mapyear = " + "'" + result.attributes.mapyear + "'";    
                                         tabs.select('home');
                                         const popup = graphics && graphics[parseInt(index, 10)];
 
@@ -1143,7 +1225,15 @@ fetch('config.json')
                 });
 
                 $("#modalClose").click(function() {
-                    storyModal.isOpen = false;
+                    storyModal.isOpen = false;                    
+                });
+
+                $("#vsModalClose").click(function() {                    
+                    vsModal.isOpen = false;
+                });
+
+                vsModal.addEventListener('didDismiss', (ev) => {
+                    vsModal.isOpen = false;
                 });
 
                 splashModal.addEventListener('didDismiss', (ev) => {

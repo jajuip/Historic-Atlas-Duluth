@@ -20,6 +20,14 @@
         right: 0;
       }
 
+      ion-menu-button#menuBtn {
+  --color: red !important;
+}
+
+      .esri-ui .esri-popup  {
+        display:  none !important;
+      } 
+
       .ion-color-favorite {
         --ion-color-base: var(--ion-color-favorite);      
       }
