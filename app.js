@@ -1105,7 +1105,7 @@ fetch('config.json')
                                     function resultClickHandler(result, index) {
                                         currentMapUrl = 'present';
                                         fpLayer.definitionExpression = "mapyear = " + "'" + result.attributes.mapyear + "'"; 
-                                        vsLayer.definitionExpression = "mapyear = " + "'" + result.attributes.mapyear + "'";    
+                                        //vsLayer.definitionExpression = "mapyear = " + "'" + result.attributes.mapyear + "'";    
                                         tabs.select('home');
                                         const popup = graphics && graphics[parseInt(index, 10)];
 
